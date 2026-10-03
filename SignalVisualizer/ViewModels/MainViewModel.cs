@@ -1,7 +1,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace SignalVisualizer.ViewModels;
@@ -14,7 +13,7 @@ public partial class MainViewModel : ViewModelBase
     [ObservableProperty]
     private string _binaryOutput = string.Empty;
 
-    private static readonly TimeSpan InputDelay = TimeSpan.FromMilliseconds(300);
+    private static readonly TimeSpan InputDelay = TimeSpan.FromMilliseconds(1000);
 
     private CancellationTokenSource? _debounceCts;
 
@@ -39,8 +38,12 @@ public partial class MainViewModel : ViewModelBase
             // A newer keystroke superseded this one; ignore.
             return;
         }
+        finally
+        {
+            _debounceCts?.Dispose();
+            _debounceCts = null;
+        }
 
-        // Marshal to the UI thread since Task.Delay resumes on a pool thread.
-        Dispatcher.UIThread.Post(() => BinaryOutput = value);
+        BinaryOutput = value;
     }
 }
