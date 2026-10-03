@@ -1,12 +1,23 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+
 using CommunityToolkit.Mvvm.ComponentModel;
+
+using SignalVisualizer.Models;
+using SignalVisualizer.Services;
 
 namespace SignalVisualizer.ViewModels;
 
 public partial class MainViewModel : ViewModelBase
 {
+    private readonly ITextToBinaryConverter _textToBinaryConverter;
+
+    public MainViewModel(ITextToBinaryConverter textToBinaryConverter)
+    {
+        _textToBinaryConverter = textToBinaryConverter;
+    }
+
     [ObservableProperty]
     private string _userInput = string.Empty;
 
@@ -44,6 +55,7 @@ public partial class MainViewModel : ViewModelBase
             _debounceCts = null;
         }
 
-        BinaryOutput = value;
+        BinaryOutput = _textToBinaryConverter.ConvertTextToBinary(value,
+            new EncodingOptions(EncodingKind.utf8, BitEndian.little));
     }
 }
