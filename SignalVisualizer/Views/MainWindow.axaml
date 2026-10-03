@@ -27,7 +27,7 @@
             
             <Grid
                 x:Name="UserInputGrid"
-                RowDefinitions="*, Auto, *"
+                RowDefinitions="*, Auto, *, Auto"
                 RowSpacing="10"
                 Margin="10">
 
@@ -82,6 +82,31 @@
                     PlaceholderText="Binary output will appear here..."
                     TextWrapping="Wrap"
                     IsReadOnly="True" />
+
+                <Grid
+                    x:Name="ByteEndiannessGrid"
+                    Grid.Row="3"
+                    ColumnDefinitions="*, *"
+                    ColumnSpacing="10">
+
+                    <TextBlock
+                        x:Name="ByteEndiannessLabel"
+                        Grid.Column="0"
+                        Text="Byte Endianness"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Right"
+                        ToolTip.Tip="Only available for UTF-16 and higher encoder" />
+
+                    <ComboBox
+                        x:Name="ByteEndiannessComboBox"
+                        Grid.Column="1"
+                        Classes="card"
+                        PlaceholderText="Select Byte Endianness"
+                        HorizontalAlignment="Stretch">
+                        <ComboBoxItem Content="Big Endian" />
+                        <ComboBoxItem Content="Little Endian" />
+                    </ComboBox>
+                </Grid>
             </Grid>
 
             <Grid
