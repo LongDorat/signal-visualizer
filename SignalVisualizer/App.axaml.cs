@@ -6,7 +6,7 @@ using Avalonia.Markup.Xaml;
 
 using Microsoft.Extensions.DependencyInjection;
 
-using SignalVisualizer.Services;
+using SignalVisualizer.DependencyInjection;
 using SignalVisualizer.ViewModels;
 using SignalVisualizer.Views;
 
@@ -24,9 +24,7 @@ public partial class App : Application
     public override void OnFrameworkInitializationCompleted()
     {
         var services = new ServiceCollection();
-
-        services.AddSingleton<ITextToBinaryConverter, TextToBinaryConverter>();
-        services.AddTransient<MainViewModel>();
+        services.AddAppServices();
 
         _services = services.BuildServiceProvider();
 
