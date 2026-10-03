@@ -8,8 +8,7 @@
         x:DataType="vm:MainViewModel"
         Title="Signal Visualizer"
         TransparencyLevelHint="AcrylicBlur"
-        Background="Transparent"
-        ExtendClientAreaToDecorationsHint="True">
+        Background="Transparent">
 
     <Panel>
         <ExperimentalAcrylicBorder IsHitTestVisible="False">
@@ -21,6 +20,89 @@
                     MaterialOpacity="0.45" />
             </ExperimentalAcrylicBorder.Material>
         </ExperimentalAcrylicBorder>
+
+        <Grid
+            x:Name="MainGrid"
+            ColumnDefinitions="*, *">
+            
+            <Grid
+                x:Name="UserInputGrid"
+                RowDefinitions="*, Auto, *"
+                RowSpacing="10"
+                Margin="10">
+
+                <TextBox
+                    x:Name="InputTextBox"
+                    Grid.Row="0"
+                    PlaceholderText="Enter your message here..."
+                    AcceptsReturn="True" />
+
+                <Grid
+                    x:Name="OutputOptionsGrid"
+                    Grid.Row="1"
+                    ColumnDefinitions="*, *, 2*"
+                    ColumnSpacing="10">
+
+                    <Button
+                        x:Name="BigEndianButton"
+                        Grid.Column="0"
+                        Content="Big Endian"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center" />
+
+                    <Button
+                        x:Name="LittleEndianButton"
+                        Grid.Column="1"
+                        Content="Little Endian"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center" />
+
+                    <ComboBox
+                        x:Name="EncodingComboBox"
+                        Grid.Column="2"
+                        PlaceholderText="Select Encoding"
+                        HorizontalAlignment="Stretch">
+                        <ComboBoxItem Content="UTF-8" />
+                        <ComboBoxItem Content="UTF-16" />
+                        <ComboBoxItem Content="ASCII" />
+                    </ComboBox>
+                </Grid>
+
+                <TextBox
+                    x:Name="OutputTextBox"
+                    Grid.Row="2"
+                    PlaceholderText="Binary output will appear here..."
+                    TextWrapping="Wrap"
+                    IsReadOnly="True" />
+            </Grid>
+
+            <Grid
+                x:Name="SignalVisualizationGrid"
+                Grid.Column="1"
+                RowDefinitions="Auto, *"
+                Margin="10"
+                RowSpacing="10">
+
+                <ComboBox
+                    x:Name="SignalTypeComboBox"
+                    Grid.Row="0"
+                    PlaceholderText="Select Signal Type"
+                    HorizontalAlignment="Stretch">
+                    <ComboBoxItem Content="Sine Wave" />
+                    <ComboBoxItem Content="Square Wave" />
+                    <ComboBoxItem Content="Triangle Wave" />
+                </ComboBox>
+
+                <Canvas
+                    x:Name="SignalCanvas"
+                    Grid.Row="1"
+                    Background="Black"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch" />
+            </Grid>
+        </Grid>
     </Panel>
 
 </Window>
