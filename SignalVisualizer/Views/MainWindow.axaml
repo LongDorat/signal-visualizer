@@ -34,6 +34,7 @@
                 <TextBox
                     x:Name="InputTextBox"
                     Grid.Row="0"
+                    Classes="card"
                     PlaceholderText="Enter your message here..."
                     AcceptsReturn="True" />
 
@@ -43,25 +44,24 @@
                     ColumnDefinitions="*, *, 2*"
                     ColumnSpacing="10">
 
-                    <Button
+                    <RadioButton
                         x:Name="BigEndianButton"
                         Grid.Column="0"
-                        Content="Big Endian"
-                        HorizontalAlignment="Stretch"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center" />
+                        Classes="segmented"
+                        GroupName="Endianness"
+                        Content="Big Endian" />
 
-                    <Button
+                    <RadioButton
                         x:Name="LittleEndianButton"
                         Grid.Column="1"
-                        Content="Little Endian"
-                        HorizontalAlignment="Stretch"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center" />
+                        Classes="segmented"
+                        GroupName="Endianness"
+                        Content="Little Endian" />
 
                     <ComboBox
                         x:Name="EncodingComboBox"
                         Grid.Column="2"
+                        Classes="card"
                         PlaceholderText="Select Encoding"
                         HorizontalAlignment="Stretch">
                         <ComboBoxItem Content="UTF-8" />
@@ -73,6 +73,7 @@
                 <TextBox
                     x:Name="OutputTextBox"
                     Grid.Row="2"
+                    Classes="card"
                     PlaceholderText="Binary output will appear here..."
                     TextWrapping="Wrap"
                     IsReadOnly="True" />
@@ -88,6 +89,7 @@
                 <ComboBox
                     x:Name="SignalTypeComboBox"
                     Grid.Row="0"
+                    Classes="card"
                     PlaceholderText="Select Signal Type"
                     HorizontalAlignment="Stretch">
                     <ComboBoxItem Content="Sine Wave" />
@@ -95,12 +97,16 @@
                     <ComboBoxItem Content="Triangle Wave" />
                 </ComboBox>
 
-                <Canvas
-                    x:Name="SignalCanvas"
+                <Border
+                    x:Name="SignalCanvasBorder"
                     Grid.Row="1"
-                    Background="Black"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch" />
+                    Classes="canvas-card">
+                    <Canvas
+                        x:Name="SignalCanvas"
+                        Background="Black"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch" />
+                </Border>
             </Grid>
         </Grid>
     </Panel>

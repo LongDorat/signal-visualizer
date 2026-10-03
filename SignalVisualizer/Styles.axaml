@@ -1,4 +1,105 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-  <!-- Add Styles Here -->
+
+  <!--
+    Reusable design tokens and opt-in styles for Signal Visualizer.
+    Views apply these through style classes (e.g. Classes="card"),
+    so shared visual properties live here instead of being repeated.
+  -->
+  <Styles.Resources>
+    <ResourceDictionary>
+      <!-- Corner radii -->
+      <CornerRadius x:Key="AppControlCornerRadius">8</CornerRadius>
+      <CornerRadius x:Key="AppCardCornerRadius">12</CornerRadius>
+
+      <!-- Accent palette used by the segmented toggles -->
+      <SolidColorBrush x:Key="AppAccentBrush" Color="#2F80ED" />
+      <SolidColorBrush x:Key="AppAccentPointerOverBrush" Color="#4C93F2" />
+      <SolidColorBrush x:Key="AppAccentPressedBrush" Color="#1F6BD4" />
+      <SolidColorBrush x:Key="AppAccentForegroundBrush" Color="#FFFFFF" />
+
+      <!-- Segmented toggle surfaces -->
+      <SolidColorBrush x:Key="AppSegmentBackgroundBrush" Color="#22FFFFFF" />
+      <SolidColorBrush x:Key="AppSegmentPointerOverBrush" Color="#33FFFFFF" />
+      <SolidColorBrush x:Key="AppSegmentBorderBrush" Color="#3DFFFFFF" />
+    </ResourceDictionary>
+  </Styles.Resources>
+
+  <!-- ============================================================
+       Rounded text entry / output surface
+       ============================================================ -->
+  <Style Selector="TextBox.card">
+    <Setter Property="CornerRadius" Value="{StaticResource AppCardCornerRadius}" />
+    <Setter Property="Padding" Value="12,10" />
+  </Style>
+
+  <!-- ============================================================
+       Rounded drop-down surface
+       ============================================================ -->
+  <Style Selector="ComboBox.card">
+    <Setter Property="CornerRadius" Value="{StaticResource AppControlCornerRadius}" />
+    <Setter Property="MinHeight" Value="36" />
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+  </Style>
+
+  <!-- ============================================================
+       Segmented toggle (RadioButton restyled as a segment/pill)
+       ============================================================ -->
+  <Style Selector="RadioButton.segmented">
+    <Setter Property="CornerRadius" Value="{StaticResource AppControlCornerRadius}" />
+    <Setter Property="MinHeight" Value="36" />
+    <Setter Property="Padding" Value="14,0" />
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+    <Setter Property="HorizontalContentAlignment" Value="Center" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="Background" Value="{StaticResource AppSegmentBackgroundBrush}" />
+    <Setter Property="BorderBrush" Value="{StaticResource AppSegmentBorderBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <ContentPresenter
+            x:Name="PART_ContentPresenter"
+            Background="{TemplateBinding Background}"
+            BorderBrush="{TemplateBinding BorderBrush}"
+            BorderThickness="{TemplateBinding BorderThickness}"
+            CornerRadius="{TemplateBinding CornerRadius}"
+            Content="{TemplateBinding Content}"
+            ContentTemplate="{TemplateBinding ContentTemplate}"
+            Padding="{TemplateBinding Padding}"
+            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+      </ControlTemplate>
+    </Setter>
+  </Style>
+
+  <Style Selector="RadioButton.segmented:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{StaticResource AppSegmentPointerOverBrush}" />
+  </Style>
+
+  <Style Selector="RadioButton.segmented:checked /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{StaticResource AppAccentBrush}" />
+    <Setter Property="BorderBrush" Value="{StaticResource AppAccentBrush}" />
+    <Setter Property="Foreground" Value="{StaticResource AppAccentForegroundBrush}" />
+  </Style>
+
+  <Style Selector="RadioButton.segmented:checked:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{StaticResource AppAccentPointerOverBrush}" />
+    <Setter Property="BorderBrush" Value="{StaticResource AppAccentPointerOverBrush}" />
+  </Style>
+
+  <Style Selector="RadioButton.segmented:checked:pressed /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{StaticResource AppAccentPressedBrush}" />
+    <Setter Property="BorderBrush" Value="{StaticResource AppAccentPressedBrush}" />
+  </Style>
+
+  <!-- ============================================================
+       Rounded plotting surface (clips its child to the corners)
+       ============================================================ -->
+  <Style Selector="Border.canvas-card">
+    <Setter Property="CornerRadius" Value="{StaticResource AppCardCornerRadius}" />
+    <Setter Property="ClipToBounds" Value="True" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="BorderBrush" Value="{StaticResource AppSegmentBorderBrush}" />
+    <Setter Property="BoxShadow" Value="0 6 18 0 #40000000" />
+  </Style>
 </Styles>
