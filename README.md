@@ -22,7 +22,7 @@ A simple tool to visualize signals via physical connections as sine wave. This i
 
 ## Contributing
 
-This project does not accept contributions, but you are welcome to open an issue or fork the repository and make your own modifications. If you do so, please ensure that you comply with the terms of the MIT License.
+This project does not accept contributions, but you are welcome to open an issue or fork the repository and make your own modifications. If you do so, please ensure that you comply with the terms of the [MIT License](LICENSE).
 
 ## Acknowledgements
 
