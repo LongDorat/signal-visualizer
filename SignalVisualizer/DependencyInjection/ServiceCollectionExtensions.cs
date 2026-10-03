@@ -20,6 +20,11 @@ public static class ServiceCollectionExtensions
         // Services
         services.AddSingleton<ITextToBinaryConverter, TextToBinaryConverter>();
 
+        // Graph generators (registration order defines the order shown in the UI).
+        services.AddSingleton<IGraphGenerator, DifferentialFrequencyGraphGenerator>();
+        services.AddSingleton<IGraphGenerator, SquareWaveGraphGenerator>();
+        services.AddSingleton<IGraphGenerator, TriangleWaveGraphGenerator>();
+
         // View models
         services.AddTransient<MainViewModel>();
 

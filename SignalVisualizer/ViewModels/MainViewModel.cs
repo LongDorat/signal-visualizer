@@ -1,8 +1,12 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 using CommunityToolkit.Mvvm.ComponentModel;
+
+using ScottPlot;
 
 using SignalVisualizer.Models;
 using SignalVisualizer.Services;
@@ -13,9 +17,29 @@ public partial class MainViewModel : ViewModelBase
 {
     private readonly ITextToBinaryConverter _textToBinaryConverter;
 
-    public MainViewModel(ITextToBinaryConverter textToBinaryConverter)
+    public MainViewModel(ITextToBinaryConverter textToBinaryConverter, IEnumerable<IGraphGenerator> generators)
     {
         _textToBinaryConverter = textToBinaryConverter;
+
+        // DI supplies the generators in registration order, which is the order
+        // shown in the UI. The first entry is the default selection.
+        Generators = generators.ToList();
+        _selectedGenerator = Generators[0];
+    }
+
+    /// <summary>All graph generators available for selection in the view.</summary>
+    public IReadOnlyList<IGraphGenerator> Generators { get; }
+
+    /// <summary>The currently selected graph generator.</summary>
+    [ObservableProperty]
+    private IGraphGenerator _selectedGenerator;
+
+    public Plot? SignalPlot { get; private set; }
+
+    public void AttachPlot(Plot plot)
+    {
+        SignalPlot = plot;
+        Convert();
     }
 
     [ObservableProperty]
@@ -83,6 +107,8 @@ public partial class MainViewModel : ViewModelBase
 
     partial void OnEncodingIndexChanged(int value) => Convert();
 
+    partial void OnSelectedGeneratorChanged(IGraphGenerator value) => UpdateSignalGraph();
+
     private void ScheduleConversion()
     {
         // Cancel the pending delay and start a fresh one.
@@ -113,5 +139,18 @@ public partial class MainViewModel : ViewModelBase
     private void Convert()
     {
         BinaryOutput = _textToBinaryConverter.ConvertTextToBinary(UserInput, BuildEncodingOptions());
+        UpdateSignalGraph();
+    }
+
+    private void UpdateSignalGraph()
+    {
+        if (SignalPlot is null)
+        {
+            return;
+        }
+
+        SelectedGenerator.GenerateSignalGraph(SignalPlot, BinaryOutput);
+
+        SignalPlot.PlotControl?.Refresh();
     }
 }

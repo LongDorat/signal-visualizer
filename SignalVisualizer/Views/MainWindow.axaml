@@ -1,6 +1,8 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:SignalVisualizer.ViewModels"
+        xmlns:services="using:SignalVisualizer.Services"
+        xmlns:ScottPlot="clr-namespace:ScottPlot.Avalonia;assembly=ScottPlot.Avalonia"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
@@ -8,7 +10,8 @@
         x:DataType="vm:MainViewModel"
         Title="Signal Visualizer"
         TransparencyLevelHint="AcrylicBlur"
-        Background="Transparent">
+        Background="Transparent"
+        Loaded="OnWindowLoaded">
 
     <Panel>
         <ExperimentalAcrylicBorder IsHitTestVisible="False">
@@ -122,19 +125,22 @@
                     Grid.Row="0"
                     Classes="card"
                     PlaceholderText="Select Signal Type"
-                    HorizontalAlignment="Stretch">
-                    <ComboBoxItem Content="Sine Wave" />
-                    <ComboBoxItem Content="Square Wave" />
-                    <ComboBoxItem Content="Triangle Wave" />
+                    HorizontalAlignment="Stretch"
+                    ItemsSource="{Binding Generators}"
+                    SelectedItem="{Binding SelectedGenerator, Mode=TwoWay}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="services:IGraphGenerator">
+                            <TextBlock Text="{Binding DisplayName}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
                 </ComboBox>
 
                 <Border
                     x:Name="SignalCanvasBorder"
                     Grid.Row="1"
                     Classes="canvas-card">
-                    <Canvas
-                        x:Name="SignalCanvas"
-                        Background="Black"
+                    <ScottPlot:AvaPlot
+                        x:Name="SignalPlot"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch" />
                 </Border>
