@@ -46,20 +46,20 @@
                     ColumnSpacing="10">
 
                     <RadioButton
-                        x:Name="BigEndianButton"
+                        x:Name="MsbFirstButton"
                         Grid.Column="0"
                         Classes="segmented"
-                        GroupName="Endianness"
-                        Content="Big Endian"
-                        IsChecked="{Binding IsBitBigEndian, Mode=TwoWay}" />
+                        GroupName="BitOrder"
+                        Content="MSB First"
+                        IsChecked="{Binding IsMsbFirst, Mode=TwoWay}" />
 
                     <RadioButton
-                        x:Name="LittleEndianButton"
+                        x:Name="LsbFirstButton"
                         Grid.Column="1"
                         Classes="segmented"
-                        GroupName="Endianness"
-                        Content="Little Endian"
-                        IsChecked="{Binding IsBitLittleEndian, Mode=TwoWay}" />
+                        GroupName="BitOrder"
+                        Content="LSB First"
+                        IsChecked="{Binding IsLsbFirst, Mode=TwoWay}" />
 
                     <ComboBox
                         x:Name="EncodingComboBox"
@@ -104,8 +104,8 @@
                         PlaceholderText="Select Byte Endianness"
                         HorizontalAlignment="Stretch"
                         SelectedIndex="{Binding ByteEndianIndex, Mode=TwoWay}">
-                        <ComboBoxItem Content="Little Endian" />
                         <ComboBoxItem Content="Big Endian" />
+                        <ComboBoxItem Content="Little Endian" />
                     </ComboBox>
                 </Grid>
             </Grid>

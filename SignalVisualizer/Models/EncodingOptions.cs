@@ -13,10 +13,10 @@ public enum ByteEndian
     big,
 }
 
-public enum BitEndian
+public enum BitOrder
 {
-    little,
-    big,
+    msbFirst,
+    lsbFirst,
 }
 
-public sealed record EncodingOptions(EncodingKind Encoding, ByteEndian ByteEndian, BitEndian Endian);
+public sealed record EncodingOptions(EncodingKind Encoding, ByteEndian ByteEndian, BitOrder BitOrder);

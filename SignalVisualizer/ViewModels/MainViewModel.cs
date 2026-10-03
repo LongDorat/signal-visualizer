@@ -25,10 +25,10 @@ public partial class MainViewModel : ViewModelBase
     private string _binaryOutput = string.Empty;
 
     [ObservableProperty]
-    private bool _isBitBigEndian;
+    private bool _isMsbFirst = true;
 
     [ObservableProperty]
-    private bool _isBitLittleEndian = true;
+    private bool _isLsbFirst;
 
     [ObservableProperty]
     private int _byteEndianIndex = 0;
@@ -40,12 +40,12 @@ public partial class MainViewModel : ViewModelBase
 
     private CancellationTokenSource? _debounceCts;
 
-    private BitEndian BitEndian => IsBitBigEndian ? BitEndian.big : BitEndian.little;
+    private BitOrder BitOrder => IsMsbFirst ? BitOrder.msbFirst : BitOrder.lsbFirst;
 
     private ByteEndian ByteEndian => ByteEndianIndex switch
     {
-        0 => ByteEndian.little,
-        _ => ByteEndian.big,
+        0 => ByteEndian.big,
+        _ => ByteEndian.little,
     };
 
     private EncodingKind Encoding => EncodingIndex switch
@@ -55,7 +55,7 @@ public partial class MainViewModel : ViewModelBase
         _ => EncodingKind.utf8,
     };
 
-    private EncodingOptions BuildEncodingOptions() => new(Encoding, ByteEndian, BitEndian);
+    private EncodingOptions BuildEncodingOptions() => new(Encoding, ByteEndian, BitOrder);
 
     partial void OnUserInputChanged(string value)
     {
@@ -63,7 +63,7 @@ public partial class MainViewModel : ViewModelBase
         ScheduleConversion();
     }
 
-    partial void OnIsBitBigEndianChanged(bool value)
+    partial void OnIsMsbFirstChanged(bool value)
     {
         if (value)
         {
@@ -71,7 +71,7 @@ public partial class MainViewModel : ViewModelBase
         }
     }
 
-    partial void OnIsBitLittleEndianChanged(bool value)
+    partial void OnIsLsbFirstChanged(bool value)
     {
         if (value)
         {

@@ -29,7 +29,7 @@ public class TextToBinaryConverter : ITextToBinaryConverter
             ? SwapByteOrder(bytes)
             : bytes;
 
-        var bits = orderedBytes.Select(byteValue => ToBitString(byteValue, options.Endian));
+        var bits = orderedBytes.Select(byteValue => ToBitString(byteValue, options.BitOrder));
 
         return string.Join(" ", bits);
     }
@@ -46,12 +46,12 @@ public class TextToBinaryConverter : ITextToBinaryConverter
         return swapped;
     }
 
-    private static string ToBitString(byte value, BitEndian bitEndian)
+    private static string ToBitString(byte value, BitOrder bitOrder)
     {
         var bits = Convert.ToString(value, 2).PadLeft(8, '0');
 
-        return bitEndian == BitEndian.big
-            ? new string(bits.Reverse().ToArray())
-            : bits;
+        return bitOrder == BitOrder.msbFirst
+            ? bits
+            : new string(bits.Reverse().ToArray());
     }
 }
