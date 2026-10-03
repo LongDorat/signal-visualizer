@@ -51,7 +51,7 @@
                         Classes="segmented"
                         GroupName="Endianness"
                         Content="Big Endian"
-                        IsChecked="{Binding IsBigEndian, Mode=TwoWay}" />
+                        IsChecked="{Binding IsBitBigEndian, Mode=TwoWay}" />
 
                     <RadioButton
                         x:Name="LittleEndianButton"
@@ -59,7 +59,7 @@
                         Classes="segmented"
                         GroupName="Endianness"
                         Content="Little Endian"
-                        IsChecked="{Binding IsLittleEndian, Mode=TwoWay}" />
+                        IsChecked="{Binding IsBitLittleEndian, Mode=TwoWay}" />
 
                     <ComboBox
                         x:Name="EncodingComboBox"
@@ -102,9 +102,10 @@
                         Grid.Column="1"
                         Classes="card"
                         PlaceholderText="Select Byte Endianness"
-                        HorizontalAlignment="Stretch">
-                        <ComboBoxItem Content="Big Endian" />
+                        HorizontalAlignment="Stretch"
+                        SelectedIndex="{Binding ByteEndianIndex, Mode=TwoWay}">
                         <ComboBoxItem Content="Little Endian" />
+                        <ComboBoxItem Content="Big Endian" />
                     </ComboBox>
                 </Grid>
             </Grid>

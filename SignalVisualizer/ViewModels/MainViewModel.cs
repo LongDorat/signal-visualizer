@@ -25,12 +25,14 @@ public partial class MainViewModel : ViewModelBase
     private string _binaryOutput = string.Empty;
 
     [ObservableProperty]
-    private bool _isBigEndian;
+    private bool _isBitBigEndian;
 
     [ObservableProperty]
-    private bool _isLittleEndian = true;
+    private bool _isBitLittleEndian = true;
 
-    // Maps to the EncodingComboBox items: 0 = UTF-8, 1 = UTF-16, 2 = ASCII.
+    [ObservableProperty]
+    private int _byteEndianIndex = 0;
+
     [ObservableProperty]
     private int _encodingIndex;
 
@@ -38,7 +40,13 @@ public partial class MainViewModel : ViewModelBase
 
     private CancellationTokenSource? _debounceCts;
 
-    private BitEndian Endian => IsBigEndian ? BitEndian.big : BitEndian.little;
+    private BitEndian BitEndian => IsBitBigEndian ? BitEndian.big : BitEndian.little;
+
+    private ByteEndian ByteEndian => ByteEndianIndex switch
+    {
+        0 => ByteEndian.little,
+        _ => ByteEndian.big,
+    };
 
     private EncodingKind Encoding => EncodingIndex switch
     {
@@ -47,7 +55,7 @@ public partial class MainViewModel : ViewModelBase
         _ => EncodingKind.utf8,
     };
 
-    private EncodingOptions BuildEncodingOptions() => new(Encoding, Endian);
+    private EncodingOptions BuildEncodingOptions() => new(Encoding, ByteEndian, BitEndian);
 
     partial void OnUserInputChanged(string value)
     {
@@ -55,7 +63,7 @@ public partial class MainViewModel : ViewModelBase
         ScheduleConversion();
     }
 
-    partial void OnIsBigEndianChanged(bool value)
+    partial void OnIsBitBigEndianChanged(bool value)
     {
         if (value)
         {
@@ -63,13 +71,15 @@ public partial class MainViewModel : ViewModelBase
         }
     }
 
-    partial void OnIsLittleEndianChanged(bool value)
+    partial void OnIsBitLittleEndianChanged(bool value)
     {
         if (value)
         {
             Convert();
         }
     }
+
+    partial void OnByteEndianIndexChanged(int value) => Convert();
 
     partial void OnEncodingIndexChanged(int value) => Convert();
 

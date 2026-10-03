@@ -7,10 +7,16 @@ public enum EncodingKind
     ascii,
 }
 
+public enum ByteEndian
+{
+    little,
+    big,
+}
+
 public enum BitEndian
 {
     little,
     big,
 }
 
-public sealed record EncodingOptions(EncodingKind Encoding, BitEndian Endian);
+public sealed record EncodingOptions(EncodingKind Encoding, ByteEndian ByteEndian, BitEndian Endian);
