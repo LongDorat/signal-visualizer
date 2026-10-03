@@ -14,10 +14,12 @@ public partial class MainWindow : Window
         InitializeComponent();
     }
 
+    /// <summary>
+    /// Hands the plot to the view model once the window and its controls are ready,
+    /// since the plotting control is created by the XAML loader.
+    /// </summary>
     private void OnWindowLoaded(object? sender, RoutedEventArgs e)
     {
-        // The plotting control is created by the XAML loader, so the view model
-        // receives the plot once the window (and its controls) are ready.
         if (DataContext is MainViewModel viewModel &&
             this.FindControl<AvaPlot>("SignalPlot") is { } plotControl)
         {

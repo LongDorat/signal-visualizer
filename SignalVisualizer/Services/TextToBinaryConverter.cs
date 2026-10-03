@@ -8,6 +8,7 @@ namespace SignalVisualizer.Services;
 
 public class TextToBinaryConverter : ITextToBinaryConverter
 {
+    /// <inheritdoc />
     public string ConvertTextToBinary(string text, EncodingOptions options)
     {
         var encoding = options.Encoding switch

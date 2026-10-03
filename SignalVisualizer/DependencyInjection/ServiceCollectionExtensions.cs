@@ -12,20 +12,18 @@ public static class ServiceCollectionExtensions
 {
     /// <summary>
     /// Adds the application's services and view models to the service collection.
+    /// Graph generators are registered in the order they should appear in the UI.
     /// </summary>
     /// <param name="services">The service collection to configure.</param>
     /// <returns>The same service collection instance, to allow method chaining.</returns>
     public static IServiceCollection AddAppServices(this IServiceCollection services)
     {
-        // Services
         services.AddSingleton<ITextToBinaryConverter, TextToBinaryConverter>();
 
-        // Graph generators (registration order defines the order shown in the UI).
         services.AddSingleton<IGraphGenerator, DifferentialFrequencyGraphGenerator>();
         services.AddSingleton<IGraphGenerator, SquareWaveGraphGenerator>();
         services.AddSingleton<IGraphGenerator, TriangleWaveGraphGenerator>();
 
-        // View models
         services.AddTransient<MainViewModel>();
 
         return services;

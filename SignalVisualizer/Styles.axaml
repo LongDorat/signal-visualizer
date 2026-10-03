@@ -8,8 +8,9 @@
   -->
   <Styles.Resources>
     <ResourceDictionary>
-      <!-- Corner radii -->
+      <!-- Corner radius applied to compact controls (buttons, drop-downs). -->
       <CornerRadius x:Key="AppControlCornerRadius">8</CornerRadius>
+      <!-- Corner radius applied to larger card surfaces. -->
       <CornerRadius x:Key="AppCardCornerRadius">12</CornerRadius>
 
       <!-- Accent palette used by the segmented toggles -->

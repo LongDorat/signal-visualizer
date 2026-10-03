@@ -82,6 +82,13 @@ public abstract class WaveformGraphGenerator : IGraphGenerator
         return bits;
     }
 
+    /// <summary>
+    /// Builds the X/Y sample arrays for the waveform, sampling
+    /// <see cref="GraphOptions.SamplesPerBit"/> points per bit.
+    /// </summary>
+    /// <param name="bits">The bits to render.</param>
+    /// <param name="options">Appearance and sampling settings.</param>
+    /// <returns>The sample coordinates for the plot.</returns>
     private (double[] Xs, double[] Ys) BuildSignal(IReadOnlyList<byte> bits, GraphOptions options)
     {
         var samplesPerBit = Math.Max(1, options.SamplesPerBit);
@@ -113,6 +120,10 @@ public abstract class WaveformGraphGenerator : IGraphGenerator
         return (xs, ys);
     }
 
+    /// <summary>Applies titles, labels and axis limits to the plot.</summary>
+    /// <param name="plot">The plot to configure.</param>
+    /// <param name="options">Appearance settings.</param>
+    /// <param name="xMax">Upper limit of the horizontal axis.</param>
     private void SetUpAxes(Plot plot, GraphOptions options, double xMax)
     {
         plot.Title(options.Title ?? DisplayName);
@@ -127,6 +138,9 @@ public abstract class WaveformGraphGenerator : IGraphGenerator
         ApplyTheme(plot, options);
     }
 
+    /// <summary>Applies background, foreground and grid colors from the options.</summary>
+    /// <param name="plot">The plot to theme.</param>
+    /// <param name="options">Appearance settings.</param>
     private static void ApplyTheme(Plot plot, GraphOptions options)
     {
         plot.FigureBackground.Color = options.BackgroundColor;
