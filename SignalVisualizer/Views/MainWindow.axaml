@@ -50,21 +50,24 @@
                         Grid.Column="0"
                         Classes="segmented"
                         GroupName="Endianness"
-                        Content="Big Endian" />
+                        Content="Big Endian"
+                        IsChecked="{Binding IsBigEndian, Mode=TwoWay}" />
 
                     <RadioButton
                         x:Name="LittleEndianButton"
                         Grid.Column="1"
                         Classes="segmented"
                         GroupName="Endianness"
-                        Content="Little Endian" />
+                        Content="Little Endian"
+                        IsChecked="{Binding IsLittleEndian, Mode=TwoWay}" />
 
                     <ComboBox
                         x:Name="EncodingComboBox"
                         Grid.Column="2"
                         Classes="card"
                         PlaceholderText="Select Encoding"
-                        HorizontalAlignment="Stretch">
+                        HorizontalAlignment="Stretch"
+                        SelectedIndex="{Binding EncodingIndex, Mode=TwoWay}">
                         <ComboBoxItem Content="UTF-8" />
                         <ComboBoxItem Content="UTF-16" />
                         <ComboBoxItem Content="ASCII" />

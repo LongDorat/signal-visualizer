@@ -24,21 +24,68 @@ public partial class MainViewModel : ViewModelBase
     [ObservableProperty]
     private string _binaryOutput = string.Empty;
 
+    [ObservableProperty]
+    private bool _isBigEndian;
+
+    [ObservableProperty]
+    private bool _isLittleEndian = true;
+
+    // Maps to the EncodingComboBox items: 0 = UTF-8, 1 = UTF-16, 2 = ASCII.
+    [ObservableProperty]
+    private int _encodingIndex;
+
     private static readonly TimeSpan InputDelay = TimeSpan.FromMilliseconds(1000);
 
     private CancellationTokenSource? _debounceCts;
 
+    private BitEndian Endian => IsBigEndian ? BitEndian.big : BitEndian.little;
+
+    private EncodingKind Encoding => EncodingIndex switch
+    {
+        1 => EncodingKind.utf16,
+        2 => EncodingKind.ascii,
+        _ => EncodingKind.utf8,
+    };
+
+    private EncodingOptions BuildEncodingOptions() => new(Encoding, Endian);
+
     partial void OnUserInputChanged(string value)
+    {
+        // Text input is debounced to avoid converting on every keystroke.
+        ScheduleConversion();
+    }
+
+    partial void OnIsBigEndianChanged(bool value)
+    {
+        if (value)
+        {
+            Convert();
+        }
+    }
+
+    partial void OnIsLittleEndianChanged(bool value)
+    {
+        if (value)
+        {
+            Convert();
+        }
+    }
+
+    partial void OnEncodingIndexChanged(int value) => Convert();
+
+    private void ScheduleConversion()
     {
         // Cancel the pending delay and start a fresh one.
         _debounceCts?.Cancel();
         _debounceCts?.Dispose();
-        _debounceCts = new CancellationTokenSource();
 
-        _ = DebounceAsync(value, _debounceCts.Token);
+        var cts = new CancellationTokenSource();
+        _debounceCts = cts;
+
+        _ = DebounceAsync(cts.Token);
     }
 
-    private async Task DebounceAsync(string value, CancellationToken token)
+    private async Task DebounceAsync(CancellationToken token)
     {
         try
         {
@@ -49,13 +96,12 @@ public partial class MainViewModel : ViewModelBase
             // A newer keystroke superseded this one; ignore.
             return;
         }
-        finally
-        {
-            _debounceCts?.Dispose();
-            _debounceCts = null;
-        }
 
-        BinaryOutput = _textToBinaryConverter.ConvertTextToBinary(value,
-            new EncodingOptions(EncodingKind.utf8, BitEndian.little));
+        Convert();
+    }
+
+    private void Convert()
+    {
+        BinaryOutput = _textToBinaryConverter.ConvertTextToBinary(UserInput, BuildEncodingOptions());
     }
 }

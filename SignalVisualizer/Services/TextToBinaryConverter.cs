@@ -19,12 +19,22 @@ public class TextToBinaryConverter : ITextToBinaryConverter
 
         var bytes = encoding.GetBytes(text);
 
-        if (options.Endian == BitEndian.big && options.Encoding == EncodingKind.utf16)
+        if (options.Endian == BitEndian.big)
         {
-            SwapPairs(bytes);
+            if (options.Encoding == EncodingKind.utf16)
+            {
+                SwapPairs(bytes);
+            }
         }
 
-        return string.Join(" ", bytes.Select(b => Convert.ToString(b, 2).PadLeft(8, '0')));
+        var binary = string.Join(" ", bytes.Select(b => Convert.ToString(b, 2).PadLeft(8, '0')));
+
+        if (options.Endian == BitEndian.big)
+        {
+            binary = new string(binary.Reverse().ToArray());
+        }
+
+        return binary;
     }
 
     private static void SwapPairs(byte[] bytes)
