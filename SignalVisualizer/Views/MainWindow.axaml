@@ -33,6 +33,7 @@
 
                 <TextBox
                     x:Name="InputTextBox"
+                    Text="{Binding UserInput, Mode=TwoWay}"
                     Grid.Row="0"
                     Classes="card"
                     PlaceholderText="Enter your message here..."
@@ -72,6 +73,7 @@
 
                 <TextBox
                     x:Name="OutputTextBox"
+                    Text="{Binding BinaryOutput, Mode=OneWay}"
                     Grid.Row="2"
                     Classes="card"
                     PlaceholderText="Binary output will appear here..."
