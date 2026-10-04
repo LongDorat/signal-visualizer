@@ -22,9 +22,10 @@ public class AmplitudeShiftKeyGenerator : WaveformGraphGenerator
     /// <inheritdoc />
     protected override double GetWaveValue(byte bit, double fraction)
     {
-        // Rises from 0 to 1 at the midpoint, then falls back to 0.
+        // Peaks at 1 in the middle of the bit and returns to 0 at the edges.
         var triangle = 1.0 - Math.Abs(2 * fraction - 1);
 
-        return bit == 1 ? triangle : -triangle;
+        // A 1 bit swings the full -1 -> 1 -> -1; a 0 bit only rises to 0 (-1 -> 0 -> -1).
+        return bit == 1 ? 2.0 * triangle - 1.0 : triangle - 1.0;
     }
 }
