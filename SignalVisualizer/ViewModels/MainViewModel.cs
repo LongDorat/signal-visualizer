@@ -79,8 +79,8 @@ public partial class MainViewModel : ViewModelBase
     /// <summary>Byte endianness derived from the selected index.</summary>
     private ByteEndian ByteEndian => ByteEndianIndex switch
     {
-        0 => ByteEndian.big,
-        _ => ByteEndian.little,
+        0 => ByteEndian.little,
+        _ => ByteEndian.big,
     };
 
     /// <summary>Character encoding derived from the selected index.</summary>

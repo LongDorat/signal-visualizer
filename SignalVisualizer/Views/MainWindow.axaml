@@ -107,8 +107,8 @@
                         PlaceholderText="Select Byte Endianness"
                         HorizontalAlignment="Stretch"
                         SelectedIndex="{Binding ByteEndianIndex, Mode=TwoWay}">
-                        <ComboBoxItem Content="Big Endian" />
                         <ComboBoxItem Content="Little Endian" />
+                        <ComboBoxItem Content="Big Endian" />
                     </ComboBox>
                 </Grid>
             </Grid>
