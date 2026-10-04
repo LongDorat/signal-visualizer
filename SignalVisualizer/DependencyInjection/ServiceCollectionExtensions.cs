@@ -19,10 +19,9 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddAppServices(this IServiceCollection services)
     {
         services.AddSingleton<ITextToBinaryConverter, TextToBinaryConverter>();
-
-        services.AddSingleton<IGraphGenerator, DifferentialFrequencyGraphGenerator>();
-        services.AddSingleton<IGraphGenerator, SquareWaveGraphGenerator>();
-        services.AddSingleton<IGraphGenerator, TriangleWaveGraphGenerator>();
+        services.AddSingleton<IGraphGenerator, FrequencyShiftKeyGenerator>();
+        services.AddSingleton<IGraphGenerator, NonReturnToZeroGenerator>();
+        services.AddSingleton<IGraphGenerator, AmplitudeShiftKeyGenerator>();
 
         services.AddTransient<MainViewModel>();
 

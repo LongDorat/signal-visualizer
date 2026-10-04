@@ -5,18 +5,18 @@ using SignalVisualizer.Models;
 namespace SignalVisualizer.Services;
 
 /// <summary>
-/// Draws a triangle wave that rises and falls across each bit, peaking positive for a
+/// Draws an amplitude-shift keyed (ASK) wave that rises and falls across each bit, peaking positive for a
 /// <c>1</c> bit and negative for a <c>0</c> bit.
 /// </summary>
-public class TriangleWaveGraphGenerator : WaveformGraphGenerator
+public class AmplitudeShiftKeyGenerator : WaveformGraphGenerator
 {
     /// <inheritdoc />
-    public override string DisplayName => "Triangle Wave";
+    public override string DisplayName => "Amplitude Shift Key";
 
     /// <inheritdoc />
     public override GraphOptions Options { get; } = GraphOptions.Default with
     {
-        Title = "Triangle Wave Signal",
+        Title = "Amplitude Shift Key Signal",
     };
 
     /// <inheritdoc />

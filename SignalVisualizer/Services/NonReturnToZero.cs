@@ -6,15 +6,15 @@ namespace SignalVisualizer.Services;
 /// Draws a non-return-to-zero (NRZ) square wave where a <c>1</c> bit is a high level
 /// and a <c>0</c> bit is a low level.
 /// </summary>
-public class SquareWaveGraphGenerator : WaveformGraphGenerator
+public class NonReturnToZeroGenerator : WaveformGraphGenerator
 {
     /// <inheritdoc />
-    public override string DisplayName => "Square Wave";
+    public override string DisplayName => "Non-Return-to-Zero";
 
     /// <inheritdoc />
     public override GraphOptions Options { get; } = GraphOptions.Default with
     {
-        Title = "Square Wave Signal",
+        Title = "Non-Return-to-Zero Signal",
         YLabel = "Level",
     };
 

@@ -5,16 +5,19 @@ using SignalVisualizer.Models;
 namespace SignalVisualizer.Services;
 
 /// <summary>
-/// Draws a differential frequency-shift keyed (FSK) signal where a <c>0</c> bit and a
+/// Draws a frequency-shift keyed (FSK) signal where a <c>0</c> bit and a
 /// <c>1</c> bit are rendered as sine waves of different frequencies.
 /// </summary>
-public class DifferentialFrequencyGraphGenerator : WaveformGraphGenerator
+public class FrequencyShiftKeyGenerator : WaveformGraphGenerator
 {
     /// <inheritdoc />
-    public override string DisplayName => "Differential Frequency";
+    public override string DisplayName => "Frequency Shift Key";
 
     /// <inheritdoc />
-    public override GraphOptions Options { get; } = GraphOptions.Default;
+    public override GraphOptions Options { get; } = GraphOptions.Default with
+    {
+        Title = "Frequency Shift Key Signal",
+    };
 
     /// <inheritdoc />
     protected override double GetWaveValue(byte bit, double fraction)
