@@ -23,6 +23,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IGraphGenerator, NonReturnToZeroGenerator>();
         services.AddSingleton<IGraphGenerator, AmplitudeShiftKeyGenerator>();
         services.AddSingleton<IGraphGenerator, PhaseShiftKeyGenerator>();
+        services.AddSingleton<IGraphGenerator, Manchester>();
 
         services.AddTransient<MainViewModel>();
 
