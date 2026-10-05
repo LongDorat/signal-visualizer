@@ -22,10 +22,10 @@ public class AmplitudeShiftKeyGenerator : WaveformGraphGenerator
     /// <inheritdoc />
     protected override double GetWaveValue(byte bit, double fraction)
     {
-        // Peaks at 1 in the middle of the bit and returns to 0 at the edges.
-        var triangle = 1.0 - Math.Abs(2 * fraction - 1);
+        // Smooth parabola peaking at 1 in the middle of the bit and returning to 0 at the edges.
+        var parabola = 4.0 * fraction * (1.0 - fraction);
 
         // A 1 bit swings the full -1 -> 1 -> -1; a 0 bit only rises to 0 (-1 -> 0 -> -1).
-        return bit == 1 ? 2.0 * triangle - 1.0 : triangle - 1.0;
+        return bit == 1 ? 2.0 * parabola - 1.0 : parabola - 1.0;
     }
 }
